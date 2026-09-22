@@ -357,6 +357,22 @@
   gap: 16px;
 }
 
+.sidebarFooter {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 0 0;
+  margin-top: auto;
+}
+
+.versionText {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  opacity: 0.6;
+  letter-spacing: 0.05em;
+  font-family: var(--font-mono, monospace);
+  user-select: none;
+}
+
 .calendarWidget {
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border-light);

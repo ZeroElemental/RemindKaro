@@ -16,6 +16,7 @@ import useEscalationEngine from "@/components/hooks/useEscalationEngine";
 import DashboardSkeleton from "@/components/skeletons/DashboardSkeleton";
 import KanbanBoard from "@/components/tasks/KanbanBoard";
 import WorkspaceActivityFeed from "@/components/ui/WorkspaceActivityFeed";
+import pkg from "@/package.json";
 
 export default function DashboardPage() {
   const [tasks, setTasks] = useState([]);
@@ -615,6 +616,10 @@ export default function DashboardPage() {
           {activeWorkspace && (
             <WorkspaceActivityFeed workspaceId={activeWorkspace.id} />
           )}
+
+          <div className={styles.sidebarFooter}>
+            <span className={styles.versionText}>v{pkg.version}</span>
+          </div>
         </aside>
       </div>
 
