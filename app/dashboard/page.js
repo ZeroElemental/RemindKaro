@@ -199,23 +199,35 @@ export default function DashboardPage() {
     )
       return;
 
-    try {
-      const pendingIds = pendingTasks.map((t) => t.id);
-      for (const id of pendingIds) {
-        await fetch(`/api/tasks/${id}`, {
+    const pendingIds = pendingTasks.map((t) => t.id);
+    const prevStatus = new Map(pendingTasks.map((t) => [t.id, t.status]));
+
+    setTasks((prev) =>
+      prev.map((t) =>
+        pendingIds.includes(t.id) ? { ...t, status: "completed" } : t
+      )
+    );
+
+    const results = await Promise.all(
+      pendingIds.map((id) =>
+        fetch(`/api/tasks/${id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ status: "completed" }),
-        });
-      }
+        })
+          .then((res) => res.ok)
+          .catch(() => false)
+      )
+    );
 
+    const failedIds = pendingIds.filter((_, i) => !results[i]);
+    if (failedIds.length > 0) {
+      console.error("Failed to mark all completed:", failedIds);
       setTasks((prev) =>
         prev.map((t) =>
-          pendingIds.includes(t.id) ? { ...t, status: "completed" } : t
+          failedIds.includes(t.id) ? { ...t, status: prevStatus.get(t.id) } : t
         )
       );
-    } catch (err) {
-      console.error("Failed to mark all completed:", err);
     }
   };
 
