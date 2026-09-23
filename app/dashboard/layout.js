@@ -66,6 +66,16 @@ export default function DashboardLayout({ children }) {
             </span>
           </Link>
           <Link
+            href="/dashboard/analytics"
+            onMouseEnter={playHoverSound}
+            className={`${styles.navLink} ${pathname === "/dashboard/analytics" ? styles.active : ""}`}
+          >
+            <span className={styles.navLinkFull}>Analytics</span>
+            <span className={styles.navLinkShort} aria-hidden>
+              Stats
+            </span>
+          </Link>
+          <Link
             href="/dashboard/support"
             onMouseEnter={playHoverSound}
             className={`${styles.navLink} ${pathname.startsWith("/dashboard/support") ? styles.active : ""}`}
